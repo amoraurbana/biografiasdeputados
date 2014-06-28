@@ -2,8 +2,8 @@ import xml.etree.ElementTree as ET
 from flask import Flask
 app = Flask(__name__)
 
-
-raiz = ET.parse("static/bios/0.xml")
+diretorio = __file__.rpartition("/")[0]
+raiz = ET.parse(diretorio+"/static/bios/0.xml")
 deps = raiz.findall("./DATA_RECORD")
 
 D = {}
