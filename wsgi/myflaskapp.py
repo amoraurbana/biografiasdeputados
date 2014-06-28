@@ -3,9 +3,9 @@ from flask import Flask
 app = Flask(__name__)
 
 
-#raiz = ET.parse("static/bios/BIOGRAFIA 0 - 700.xml")
-#deps = raiz.findall("./DATA_RECORD")
-deps=[]
+raiz = ET.parse("static/bios/0.xml")
+deps = raiz.findall("./DATA_RECORD")
+
 D = {}
 for dep in deps:
     cod = dep.find("CODPESSOA").text
