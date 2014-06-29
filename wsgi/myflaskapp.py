@@ -1,6 +1,7 @@
+# coding=UTF8
 import os 
 import xml.etree.ElementTree as ET
-from flask import Flask
+from flask import Flask, url_for
 app = Flask(__name__)
 
 D = {}
@@ -20,20 +21,45 @@ for xml in xmls:
         D[cod] = d
     
 print "processados!"
-#print D
 
+LISTAALFAB = sorted(D.values(), key=lambda dep: dep["TXTNOME"]) 
+LISTACRONO = sorted(D.values(), key=lambda dep: dep["LEGISLATURAS"])
+
+print "ordenados!"
 
 @app.route("/")
-def todos():
+def inicial ():
+    pag = "História dos Deputados do Brasil"
+    pag += "<ul>"
+    link = url_for('listar', ordem="a", qte="20", p="1")
+    pag += '<li><a href="%s">Ordem Alfabética</a></li>' % (link)
+    link = url_for('listar', ordem="c", qte="20", p="1")
+    pag += '<li><a href="%s">Ordem Cronológica</a></li>' % (link)
+    return pag
+
+
+@app.route("/listar/<ordem>/<qte>/<p>")
+def listar(ordem, qte, p):
+    if ordem == "a":
+        lista = LISTAALFAB
+    else:
+        lista = LISTACRONO
+    qte = int(qte)
+    p = int(p)
+    lista = lista[qte*p-qte:qte*p]   
     pag = "<ul>"
-    for cod, dep in D.items():
+    for dep in lista:
         nome = dep["TXTNOME"]
-        pag += '<li><a href="dep/%s">%s</a></li>' % (cod, nome)
-    pag += "</ul>"   
+        cod = dep["CODPESSOA"]
+        link = url_for('dep', cod=cod)
+        pag += '<li><a href="%s">%s</a></li>' % (link, nome)
+    pag += "</ul>"
+    link = url_for("listar", ordem=ordem, qte=str(qte), p=str(p+1))
+    pag += '<a href="%s">Proximo</a>' % (link)
     return pag
     
 @app.route("/dep/<cod>")
-def lista(cod):
+def dep(cod):
     dep = D[cod]
     idcad = dep["IDECADASTRO"]
     pag = '<img src="/static/fotos/%s.jpg"/>'% (idcad)
