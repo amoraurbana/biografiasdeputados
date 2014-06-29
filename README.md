@@ -1,8 +1,13 @@
-Flask on OpenShift
+Biografias Deputados (Brasil)
 ==================
 
-This git repository helps you get up and running quickly w/ a Flask installation
-on OpenShift.
+Usando base de dados da Câmara dos Deputados, fizemos esse proto-site para disponibilizar as infos que não estavam disponíveis ao público.
+
+Atualmente este sistema está hospedado aqui:
+deputados-nascidades.rhcloud.com
+
+Este código está sob licença GPL3.
+
 
 
 Running on OpenShift
@@ -12,12 +17,12 @@ Create an account at https://www.openshift.com
 
 Create a python application
 
-    rhc app create flask python-2.6
+    rhc app create deputados python-2.6
 
-Add this upstream flask repo
+Add this upstream repo
 
-    cd flask
-    git remote add upstream -m master https://github.com/openshift/flask-example.git
+    cd deputados
+    git remote add upstream -m master https://github.com/amoraurbana/biografiasdeputados.git
     git pull -s recursive -X theirs upstream master
     
 Then push the repo upstream
@@ -26,15 +31,4 @@ Then push the repo upstream
 
 That's it, you can now checkout your application at:
 
-    http://flask-$yournamespace.rhcloud.com
-
-------------------------------
-
-To get more log messages in your OpenShift logs please add the following line to your code
-
-app.config['PROPAGATE_EXCEPTIONS'] = True  
-
-To read more about logging in Flask please see this email
-
-http://flask.pocoo.org/mailinglist/archive/2012/1/27/catching-exceptions-from-flask/
-
+    http://deputados-$yournamespace.rhcloud.com
