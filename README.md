@@ -4,7 +4,7 @@ Biografias Deputados (Brasil)
 Usando base de dados da Câmara dos Deputados, fizemos esse proto-site para disponibilizar as infos que não estavam disponíveis ao público.
 
 Atualmente este sistema está hospedado aqui:
-deputados-nascidades.rhcloud.com
+http://deputados-nascidades.rhcloud.com
 
 Este código está sob licença GPL3.
 
